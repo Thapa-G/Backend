@@ -48,9 +48,16 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 CORS_ALLOW_CREDENTIALS = True
-CSRF_COOKIE_HTTPONLY = False  # To allow access to the CSRF cookie in JavaScript
+CSRF_COOKIE_HTTPONLY = True # To allow access to the CSRF cookie in JavaScript
 CSRF_COOKIE_SECURE = False    # Set to True in production if using HTTPS
-CSRF_USE_SESSIONS = True
+CSRF_USE_SESSIONS = False
+SESSION_COOKIE_AGE = 120960
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True 
+SESSION_COOKIE_SAMESITE = 'None'
+CSRF_TRUSTED_ORIGINS=[
+    'http://localhost:3000',
+]
+SESSION_COOKIE_SECURE:False
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

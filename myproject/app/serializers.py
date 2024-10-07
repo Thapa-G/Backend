@@ -4,7 +4,14 @@ from django.contrib.auth.models import User
 class ImageUploadSerializer(serializers.ModelSerializer):
     class Meta:
         model = ImageUpload
-        fields = ['id', 'image']
+        fields = ['user', 'image']  # Include user in the fields
+
+    def create(self, validated_data):
+        # Associate the image upload with the authenticated user
+        user = validated_data.pop('user')
+        image_upload = ImageUpload.objects.create(user=user, **validated_data)
+        return image_upload
+
 
 class RegisterUserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -21,3 +28,4 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
